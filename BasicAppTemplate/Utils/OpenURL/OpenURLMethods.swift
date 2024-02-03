@@ -11,7 +11,7 @@ import iOS_Backend_SDK
 
 extension OpenURL {
     
-    /// Before executing this method, make sure that you have passed email to the shared instance
+    /// Before executing this method, make sure that you have passed email to the shared instances
     internal func confirmEmail(token: String, isTwoFa: Bool, appSecurityTokenId: String?) async {
         
         if isTwoFa {
@@ -41,6 +41,7 @@ extension OpenURL {
         }
         
     }
+    
     
     private func createNewUser(backendUser: BackendUser, token: String) {
         let user = User(_id: try! ObjectId(string: backendUser._id), oauthProviderUserId: backendUser.oauthProviderUserId, token: token, name: backendUser.name, email: backendUser.email, photo: backendUser.photo, oauthProvider: backendUser.oauthProvider)

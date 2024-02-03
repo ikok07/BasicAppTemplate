@@ -3,20 +3,4 @@
    uuid = "9E200753-C2FB-40BF-A2CB-E6CEED5367CF"
    type = "1"
    version = "2.0">
-   <Breakpoints>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "ADC57B40-6FB7-4D53-A6AB-3668AD2E47A6"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../Library/Developer/Xcode/DerivedData/BasicAppTemplate-gkkfdbwrasjlvhdkeuhhsrqagdjf/SourcePackages/checkouts/NetworkRequests/Sources/NetworkRequests/Utils/FormData.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70">
-         </BreakpointContent>
-      </BreakpointProxy>
-   </Breakpoints>
 </Bucket>

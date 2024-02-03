@@ -31,7 +31,7 @@ struct ProfileSettingsUserView: View {
                             picker()
                         }
                 } else {
-                    AsyncImage(url: URL(string: "\(K.App.assetServerUrl)\(imageUrl)")!) { image in
+                    AsyncImage(url: URL(string: imageUrl) ?? URL(string: "https://")) { image in
                         image
                             .resizable()
                             .scaledToFit()

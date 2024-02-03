@@ -19,11 +19,12 @@ struct BasicAppTemplateApp: App {
         print(String(describing: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path))
         
         Backend.shared.config = BackendConfig(
+            debugMode: true,
             bundleId: K.App.bundleID,
             deviceToken: NotificationManager.shared.deviceToken,
-            baseUrl: K.App.backendUrl,
             language: "en",
             googleClientID: K.App.googleClientID,
+            backendUrls: K.App.backendUrls,
             errors: []
         )
         

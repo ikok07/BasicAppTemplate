@@ -15,6 +15,8 @@ import UIKit
     
     static let shared = AccountManager()
     private init() {}
+    
+    var logoutAttempts: Int = 0
 
     var user: User? {
         get {
@@ -58,9 +60,10 @@ import UIKit
     @MainActor
     func logout(force: Bool = false) async {
         
-        guard !force else {
+        if force || self.logoutAttempts >= 3 {
             DB.shared.update {
                 loginStatus?.logOut()
+                self.logoutAttempts = 0
             }
             return
         }
@@ -79,9 +82,11 @@ import UIKit
                         UXComponents.shared.showMsg(type: .error, text: CustomError.cannotLogOut.localizedDescription)
                     }
                     
+                    self.logoutAttempts = 0
                     NavigationManager.shared.clearPaths()
                 case .failure(let error):
                     UXComponents.shared.showMsg(type: .error, text: error.localizedDescription)
+                    self.logoutAttempts += 1
                 }
             }
         }
