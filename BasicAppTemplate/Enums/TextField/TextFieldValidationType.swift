@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum TextFieldValidationType: String, CaseIterable, Codable {
+enum TextFieldValidationType: Codable, Equatable {
     case none
     case general
     case email
     case password
-    case confirmPassword
+    case confirmPassword(mainPassword: String, errorMessage: String)
 }

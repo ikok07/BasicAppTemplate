@@ -23,18 +23,22 @@ struct DefaultTextField: View {
     var secureField: Bool = false
     var validationType: TextFieldValidationType = .none
     
-    var mainPassword: String? = nil
+    var textToCompare: String? = nil
     
     @Binding var validation: Bool
 
     
-    func validationType(_ type: TextFieldValidationType, mainPassword: String? = nil) -> DefaultTextField {
+    func validationType(_ type: TextFieldValidationType) -> DefaultTextField {
         var view = self
         view.validationType = type
-        if type == .password || type == .confirmPassword { view.secureField = true }
-        if let mainPassword {
-            view.mainPassword = mainPassword
+        
+        if case .password = type {
+            view.secureField = true
+        } else if case .confirmPassword(let mainPassword, _) = type {
+            view.secureField = true
+            view.textToCompare = mainPassword
         }
+        
         return view
     }
     
@@ -84,8 +88,12 @@ struct DefaultTextField: View {
                     .stroke(viewModel.getMainColor(focusState: self.focusState), lineWidth: 1)
             }
             .onChange(of: self.text) { _, newText in
-                viewModel.validate(text: newText, mainPassword: self.mainPassword)
-                validation = !viewModel.textFieldError.isAvailable
+                performValidation(text: newText)
+            }
+            .onChange(of: self.textToCompare) { oldValue, newValue in
+                if newValue != nil, !self.text.isEmpty {
+                    performValidation(text: self.text)
+                }
             }
                         
             HStack {
@@ -109,6 +117,12 @@ struct DefaultTextField: View {
         .onAppear {
             viewModel.validationType = self.validationType
         }
+    }
+    
+    func performValidation(text: String) {
+        viewModel.validationType = self.validationType
+        viewModel.validate(text: text)
+        validation = !viewModel.textFieldError.isAvailable
     }
 }
 

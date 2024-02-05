@@ -30,16 +30,16 @@ struct ListInputField: View {
     var validationType: TextFieldValidationType = .none
     var showErrorText: Bool = false
     
-    var mainPassword: String? = nil
+    var textToCompare: String? = nil
     
     @Binding var validation: Bool
     
-    init(icon: String? = nil, label: String?, placeholder: String, isDisabled: Bool = false, resetter: Binding<Bool> = .constant(false), text: Binding<String>, mainPassword: String? = nil, validation: Binding<Bool> = .constant(false)) {
+    init(icon: String? = nil, label: String?, placeholder: String, isDisabled: Bool = false, resetter: Binding<Bool> = .constant(false), text: Binding<String>, textToCompare: String? = nil, validation: Binding<Bool> = .constant(false)) {
         self.icon = icon
         self.label = label
         self.placeholder = placeholder
         self.isDisabled = isDisabled
-        self.mainPassword = mainPassword
+        self.textToCompare = textToCompare
         
         _resetter = resetter
         _text = text
@@ -59,14 +59,17 @@ struct ListInputField: View {
         return view
     }
     
-    func validationType(_ type: TextFieldValidationType, mainPassword: String? = nil, enableErrorText: Bool = false) -> ListInputField {
+    func validationType(_ type: TextFieldValidationType) -> ListInputField {
         var view = self
         view.validationType = type
-        view.showErrorText = enableErrorText
-        if type == .password || type == .confirmPassword { view.secureField = true }
-        if let mainPassword {
-            view.mainPassword = mainPassword
+        
+        if case .password = type {
+            view.secureField = true
+        } else if case .confirmPassword(let mainPassword, _) = type {
+            view.secureField = true
+            view.textToCompare = mainPassword
         }
+        
         return view
     }
     
@@ -132,20 +135,25 @@ struct ListInputField: View {
             viewModel.validationType = self.validationType
         }
         .onChange(of: self.text) { _, newText in
-            viewModel.validate(text: newText, mainPassword: self.mainPassword)
-            validation = !viewModel.textFieldError.isAvailable
+            performValidation(text: newText)
         }
         .onChange(of: self.resetter, { oldValue, newValue in
             viewModel.textFieldError.isAvailable = false
         })
-        .onChange(of: self.mainPassword, { oldValue, newValue in
-            if self.text != "" {
-                viewModel.validate(text: self.text, mainPassword: self.mainPassword)
+        .onChange(of: self.textToCompare, { oldValue, newValue in
+            if newValue != nil, !self.text.isEmpty {
+                performValidation(text: self.text)
             }
         })
         .animation(.default, value: viewModel.textFieldError.isAvailable)
         .animation(.default, value: self.text)
         .animation(.default, value: viewModel.textFieldError.text)
+    }
+    
+    func performValidation(text: String) {
+        viewModel.validationType = self.validationType
+        viewModel.validate(text: text)
+        validation = !viewModel.textFieldError.isAvailable
     }
 }
 

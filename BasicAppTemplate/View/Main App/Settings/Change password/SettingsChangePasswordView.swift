@@ -32,7 +32,10 @@ struct SettingsChangePasswordView: View {
                 ListInputField(icon: "key.horizontal", label: nil, placeholder: "Confirm new password", resetter: $viewModel.resetTextFields, text: $viewModel.confirmNewPassword, validation: $viewModel.validation[2])
                     .labelWidthSize(5)
                     .customIcon(font: .title3)
-                    .validationType(.confirmPassword, mainPassword: viewModel.newPassword)
+                    .validationType(.confirmPassword(
+                        mainPassword: viewModel.newPassword,
+                        errorMessage: "New passwords must be the same"
+                    ))
                     .isSecure()
             }
         }

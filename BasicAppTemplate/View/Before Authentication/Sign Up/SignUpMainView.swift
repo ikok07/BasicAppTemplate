@@ -35,7 +35,10 @@ struct SignUpMainView: View {
                         .validationType(.password)
                     
                     DefaultTextField(text: $viewModel.confirmPassword, icon: "key.horizontal.fill", placeholder: "Confirm password", validation: $viewModel.validations[3])
-                        .validationType(.confirmPassword, mainPassword: viewModel.password)
+                        .validationType(.confirmPassword(
+                            mainPassword: viewModel.password,
+                            errorMessage: "Passwords must be the same"
+                        ))
                 }
                 
                 DefaultButton(

@@ -28,7 +28,10 @@ struct ForgotPasswordMainView: View {
                     .validationType(.password)
                 
                 DefaultTextField(text: $confirmNewPassword, icon: "key.horizontal.fill", placeholder: "New password", validation: $validations[1])
-                    .validationType(.confirmPassword, mainPassword: newPassword)
+                    .validationType(.confirmPassword(
+                        mainPassword: confirmNewPassword,
+                        errorMessage: "Passwords must be the same"
+                    ))
             }
             
             DefaultButton(

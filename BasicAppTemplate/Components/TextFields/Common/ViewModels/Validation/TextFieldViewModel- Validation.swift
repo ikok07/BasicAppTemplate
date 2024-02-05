@@ -9,7 +9,7 @@ import Foundation
 
 extension TextFieldViewModel {
     
-    func validate(text: String, mainPassword: String? = nil) {
+    func validate(text: String) {
         switch validationType {
         case .none:
             return
@@ -19,8 +19,8 @@ extension TextFieldViewModel {
             self.textFieldError = emailValidation(text: text)
         case .password:
             self.textFieldError = passwordValidation(text: text)
-        case .confirmPassword:
-            self.textFieldError = confirmPasswordValidation(text: text, mainPassword: mainPassword)
+        case .confirmPassword(let mainPassword, let errMessage):
+            self.textFieldError = confirmTextToCompareValidation(text: text, compareTo: mainPassword, errMessage: errMessage)
         }
     }
     
@@ -57,12 +57,12 @@ extension TextFieldViewModel {
         return (false, "")
     }
     
-    func confirmPasswordValidation(text: String, mainPassword: String?) -> (Bool, String) {
-        if let mainPassword {
-            if text == mainPassword {
+    func confirmTextToCompareValidation(text: String, compareTo textToCompare: String?, errMessage: String?) -> (Bool, String) {
+        if let textToCompare {
+            if text == textToCompare {
                 return (false, "")
             } else {
-                return (true, "Passwords must be the same")
+                return (true, errMessage ?? "Values must be the same!")
             }
         } else {
             return (true, "There is no password field available")
