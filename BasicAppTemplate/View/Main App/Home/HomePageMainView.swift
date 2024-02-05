@@ -34,15 +34,15 @@ struct HomePageMainView: View {
                         }
                     }
                 }
-                .refreshable {
-                    await Task {
-                        do {
-                            try await accManager.downloadUser()
-                        } catch {
-                            print("Error downloading latest user info! \(error)")
-                        }
-                    }.value
-                }
+            }
+            .refreshable {
+                await Task {
+                    do {
+                        try await accManager.downloadUser()
+                    } catch {
+                        print("Error downloading latest user info! \(error)")
+                    }
+                }.value
             }
         }
     }
