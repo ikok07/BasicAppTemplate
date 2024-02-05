@@ -45,7 +45,8 @@ import UIKit
     }
     
     @MainActor
-    func downloadUser() async {
+    func downloadUser() async throws {
+        var throwError: Error?
         if let user {
             await Backend.shared.getUser(authToken: user.token ?? "") { result in
                 switch result {
@@ -57,10 +58,17 @@ import UIKit
                     }
                 case .failure(let error):
                     UXComponents.shared.showMsg(type: .error, text: error.localizedDescription)
+                    await self.logout(force: true)
+                    throwError = error
                 }
             }
         } else {
             UXComponents.shared.showMsg(type: .error, text: CustomError.noUserAvailable.localizedDescription)
+            await self.logout(force: true)
+            throwError = CustomError.noUserAvailable
+        }
+        if let throwError {
+            throw throwError
         }
     }
     

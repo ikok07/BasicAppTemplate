@@ -20,27 +20,29 @@ struct HomePageMainView: View {
         @Bindable var navManager = self.navManager
         
         NavigationStack(path: $navManager.homePath) {
-            ScrollViewReader { proxy in
-                VStack {
-                    Spacer()
-                    Text("Name: \(userResults.first?.name ?? "???")")
-                        .id(0)
-                    Spacer()
-                }
-                .onChange(of: self.scrollToggle) { oldValue, newValue in
-                    withAnimation {
-                        proxy.scrollTo(0, anchor: .top)
+            ScrollView {
+                ScrollViewReader { proxy in
+                    VStack {
+                        Spacer()
+                        Text("Name: \(userResults.first?.name ?? "???")")
+                            .id(0)
+                        Spacer()
+                    }
+                    .onChange(of: self.scrollToggle) { oldValue, newValue in
+                        withAnimation {
+                            proxy.scrollTo(0, anchor: .top)
+                        }
                     }
                 }
-            }
-            .refreshable {
-                await Task {
-                    do {
-                        try await accManager.downloadUser()
-                    } catch {
-                        print("Error downloading latest user info! \(error)")
-                    }
-                }.value
+                .refreshable {
+                    await Task {
+                        do {
+                            try await accManager.downloadUser()
+                        } catch {
+                            print("Error downloading latest user info! \(error)")
+                        }
+                    }.value
+                }
             }
         }
     }
