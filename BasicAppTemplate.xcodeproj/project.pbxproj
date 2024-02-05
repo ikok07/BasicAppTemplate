@@ -25,6 +25,8 @@
 		2211902D2B24F21D000865F1 /* TextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211902C2B24F21D000865F1 /* TextFieldViewModel.swift */; };
 		221190322B24F445000865F1 /* TextFieldValidationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221190312B24F445000865F1 /* TextFieldValidationType.swift */; };
 		221190372B24F59F000865F1 /* TextFieldViewModel- Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221190362B24F59F000865F1 /* TextFieldViewModel- Validation.swift */; };
+		2223A9732B710E6A00108251 /* ProfileSettingsImageOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223A9722B710E6A00108251 /* ProfileSettingsImageOverlayView.swift */; };
+		2223A9772B71226F00108251 /* HomePageMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223A9762B71226F00108251 /* HomePageMainView.swift */; };
 		2226EBA62B617076006DF430 /* DeleteProfileOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2226EBA52B617076006DF430 /* DeleteProfileOption.swift */; };
 		2234451C2B5D48FD00AED548 /* WholeScreenLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234451B2B5D48FD00AED548 /* WholeScreenLoader.swift */; };
 		2234451F2B5D4BD000AED548 /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 2234451E2B5D4BD000AED548 /* Shimmer */; };
@@ -113,6 +115,8 @@
 		2211902C2B24F21D000865F1 /* TextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldViewModel.swift; sourceTree = "<group>"; };
 		221190312B24F445000865F1 /* TextFieldValidationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldValidationType.swift; sourceTree = "<group>"; };
 		221190362B24F59F000865F1 /* TextFieldViewModel- Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextFieldViewModel- Validation.swift"; sourceTree = "<group>"; };
+		2223A9722B710E6A00108251 /* ProfileSettingsImageOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsImageOverlayView.swift; sourceTree = "<group>"; };
+		2223A9762B71226F00108251 /* HomePageMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageMainView.swift; sourceTree = "<group>"; };
 		2226EBA52B617076006DF430 /* DeleteProfileOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProfileOption.swift; sourceTree = "<group>"; };
 		2234451B2B5D48FD00AED548 /* WholeScreenLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WholeScreenLoader.swift; sourceTree = "<group>"; };
 		2265A4862B2F6FB60033A843 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -445,6 +449,14 @@
 			path = Validation;
 			sourceTree = "<group>";
 		};
+		2223A9752B71226500108251 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				2223A9762B71226F00108251 /* HomePageMainView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		2226EBA32B616EC1006DF430 /* Delete profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -523,6 +535,7 @@
 			isa = PBXGroup;
 			children = (
 				2265A4912B2F764C0033A843 /* ProfileSettingsUserView.swift */,
+				2223A9722B710E6A00108251 /* ProfileSettingsImageOverlayView.swift */,
 			);
 			path = "Profile settings";
 			sourceTree = "<group>";
@@ -591,6 +604,7 @@
 			isa = PBXGroup;
 			children = (
 				22A1CDEE2B2A30FA005EBDCC /* Manager */,
+				2223A9752B71226500108251 /* Home */,
 				229DD9582B2F1C0300AD7525 /* Settings */,
 			);
 			path = "Main App";
@@ -988,6 +1002,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2223A9732B710E6A00108251 /* ProfileSettingsImageOverlayView.swift in Sources */,
 				22E794DF2B2E2AF300F60178 /* AuthenticationOpenEmailSheetView.swift in Sources */,
 				2265A4962B2F7A7E0033A843 /* ProfileSettingsViewModel.swift in Sources */,
 				221190322B24F445000865F1 /* TextFieldValidationType.swift in Sources */,
@@ -1057,6 +1072,7 @@
 				2280BDC72B51C02500AAA811 /* EmailConfirmType.swift in Sources */,
 				2201961F2B279EFE00CDE88E /* EmailClient.swift in Sources */,
 				22CAF4A52B261A0000FFDAED /* ViewModifier.swift in Sources */,
+				2223A9772B71226F00108251 /* HomePageMainView.swift in Sources */,
 				220196122B27818400CDE88E /* UXComponents.swift in Sources */,
 				2211900D2B24E529000865F1 /* BasicAppTemplateApp.swift in Sources */,
 				22FB7CB42B28E39F0005144E /* User.swift in Sources */,

@@ -13,6 +13,7 @@ struct ContentView: View {
     @ObservedResults(LoginStatus.self) private var loginStatusResults
     @Environment(NavigationManager.self) private var navManager
     @Environment(UXComponents.self) private var uxComponents
+    @Environment(AccountManager.self) private var accManager
     
     var body: some View {
         @Bindable var uxComponents = self.uxComponents
@@ -38,6 +39,9 @@ struct ContentView: View {
         }
         .animation(.default, value: loginStatusResults.first?.isLoggedIn)
         .animation(.default, value: loginStatusResults.first?.hasDetails)
+        .onChange(of: loginStatusResults.first) { oldValue, newValue in
+            accManager.userInitialized = false
+        }
     }
 }
 
@@ -45,4 +49,5 @@ struct ContentView: View {
     ContentView()
         .environment(NavigationManager.shared)
         .environment(UXComponents.shared)
+        .environment(AccountManager.shared)
 }

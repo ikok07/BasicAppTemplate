@@ -40,6 +40,8 @@ struct BasicAppTemplateApp: App {
     @State private var accManager = AccountManager.shared
     @State private var notificationManager = NotificationManager.shared
     
+    
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -53,16 +55,14 @@ struct BasicAppTemplateApp: App {
                     }
                 })
                 .onAppear {
-                    GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
-                        // Check if `user` exists; otherwise, do something with `error`
-                        
-                        if let error {
-                            print("Error restoring google sign in state: \(error)")
-                            return
-                        }
-                        
-                        
-                    }
+//                    GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+//                        if let error {
+//                            print("Error restoring google sign in state: \(error)")
+//                            UXComponents.shared.showMsg(type: .error, text: CustomError.noUserAvailable.localizedDescription)
+//                            Task { await AccountManager.shared.logout(force: true) }
+//                            return
+//                        }
+//                    }
                 }
         }
     }

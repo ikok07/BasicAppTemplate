@@ -16,6 +16,7 @@ import UIKit
     static let shared = AccountManager()
     private init() {}
     
+    var userInitialized: Bool = false
     var logoutAttempts: Int = 0
 
     var user: User? {
@@ -29,6 +30,37 @@ import UIKit
         get {
             let status: LoginStatus? = DB.shared.fetch()?.first
             return status?.thaw()
+        }
+    }
+    
+    func convertBackendUser(_ backendUser: BackendUser, token: String?) -> User {
+        return User(_id: try! ObjectId(string: backendUser._id),
+                    oauthProviderUserId: backendUser.oauthProviderUserId,
+                    token: token,
+                    name: backendUser.name,
+                    email: backendUser.email,
+                    photo: backendUser.photo,
+                    oauthProvider: backendUser.oauthProvider
+        )
+    }
+    
+    @MainActor
+    func downloadUser() async {
+        if let user {
+            await Backend.shared.getUser(authToken: user.token ?? "") { result in
+                switch result {
+                case .success(let response):
+                    if let backendUser = response.data {
+                        DB.shared.save(self.convertBackendUser(backendUser, token: user.token))
+                    } else {
+                        UXComponents.shared.showMsg(type: .error, text: response.message ?? "?")
+                    }
+                case .failure(let error):
+                    UXComponents.shared.showMsg(type: .error, text: error.localizedDescription)
+                }
+            }
+        } else {
+            UXComponents.shared.showMsg(type: .error, text: CustomError.noUserAvailable.localizedDescription)
         }
     }
     

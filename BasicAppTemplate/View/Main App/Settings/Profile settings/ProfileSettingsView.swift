@@ -21,7 +21,7 @@ struct ProfileSettingsView: View {
     
     var body: some View {
         List {
-            ProfileSettingsUserView(imageUrl: accManager.user?.photo ?? "", name: accManager.user?.name ?? "No username", email: accManager.user?.email ?? "No email", localImage: viewModel.image, imageItem: $imageItem)
+            ProfileSettingsUserView(imageUrl: userResults.first?.photo ?? "", name: userResults.first?.name ?? "No username", email: userResults.first?.email ?? "No email", localImage: viewModel.image, imageItem: $imageItem)
             
             ListProgressView(isActive: viewModel.isLoading)
             
@@ -59,9 +59,11 @@ struct ProfileSettingsView: View {
             .disabled(!viewModel.saveButtonActive())
         }
         .onAppear {
-            viewModel.name = accManager.user?.name ?? "No username"
-            viewModel.email = accManager.user?.email ?? "No email"
+            loadViewModelData()
         }
+        .onChange(of: self.userResults.first, { oldValue, newValue in
+            loadViewModelData()
+        })
         .onChange(of: self.imageItem) { _, newItem in
             Task {
                 await viewModel.convertImageItem(newItem)
@@ -69,6 +71,11 @@ struct ProfileSettingsView: View {
         }
         .animation(.default, value: !viewModel.saveButtonActive())
         .animation(.default, value: !viewModel.isLoading)
+    }
+    
+    func loadViewModelData() {
+        viewModel.name = userResults.first?.name ?? "No username"
+        viewModel.email = userResults.first?.email ?? "No email"
     }
 }
 
